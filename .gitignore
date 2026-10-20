@@ -67,7 +67,6 @@ node_modules/
 
 # --- Materiais protegidos ---
 # Livros e PDFs: linke as fontes no README em vez de subir o arquivo
-*.pdf
 *.epub
 *.mobi
 
