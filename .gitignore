@@ -1,0 +1,76 @@
+# --- Editores ---
+# Emacs
+*~
+\#*\#
+.\#*
+*.elc
+auto-save-list/
+.dir-locals.el
+
+# Vim / Neovim
+*.swp
+*.swo
+.netrwhist
+Session.vim
+
+# VS Code / JetBrains
+.vscode/
+.idea/
+
+# --- Sistema operacional ---
+# Windows
+Thumbs.db
+desktop.ini
+$RECYCLE.BIN/
+
+# Linux / macOS
+.DS_Store
+.directory
+.Trash-*
+
+# --- Compilação em C (módulos 02, 04, 05) ---
+*.o
+*.obj
+*.a
+*.so
+*.d
+*.out
+*.exe
+*.gch
+a.out
+build/
+bin/
+core
+core.*
+
+# xv6 (artefatos de build)
+xv6-*/kernel/kernel
+xv6-*/fs.img
+xv6-*/user/_*
+*.asm
+*.sym
+*.img
+*.log
+
+# --- Python / Node (scripts auxiliares) ---
+__pycache__/
+*.pyc
+.venv/
+venv/
+node_modules/
+
+# --- Nand2Tetris ---
+# Os arquivos .hdl, .asm, .vm e .jack são código seu e devem ser versionados.
+# Ignore só saídas geradas pelas ferramentas:
+*.out
+*.cmp.bak
+
+# --- Materiais protegidos ---
+# Livros e PDFs: linke as fontes no README em vez de subir o arquivo
+*.pdf
+*.epub
+*.mobi
+
+# --- Segredos e temporários ---
+.env
+*.tmp
