@@ -96,3 +96,10 @@ Ou até mesmo usamor potências para escreve-lo:
 4 x 10² + 7 x 10¹ + 8 x 10⁰
 
 Basicamente esse é o sistema numérico com base 10 que usamos no dia a dia.
+
+## Décimo Capítulo - Alternatives 10s
+Além da base decimal que usamos no nosso dia a dia, elas usam 10 caracteres diferentes (0,1,2,3,4,5,6,7,8,9) depois que esses caracteres acabam, nós passamos para a próxima casa (10), estamos mais familiarizados com esse sistema, mas também temos outras alternativas, como a base 8, com 8 caracteres diferentes (0,1,2,3,4,5,6,7), repare que na base octal não temos o número 8, assim como não temos um caracter para representar o dez na base decimal, então na base 8, o 10 na verdade não significa dez, e sim 1 e 0, e o valor dele na verdade é 8. Então para escrevermos um número em base octal que realmente vale dez é 12, e no caso caso o número '12' não é doze, e sim 1 e 2.
+Assim como temos a base octal, temos também a base dois, que são representadas apenas por dois caracteres (0,1) então 10 na base dois na verdade não vale "dez" e sim 2, cada casa da base 2 é representada como uma potência de dois, ou seja o número é 1011, e ele poderia ser escrito assim:
+1 x 2³ + 0 x 2² + 1 x 2¹ + 1 x 2⁰
+
+Assim a base dois é usada para representar qualquer número, com essa simplicidade podemos usarmos em circuítos elétricos, representadando o ligado e desligado (1 e 0), e com ela também podemos fazer operações booleanas, e isso é tudo que precisamos para montar um computador.
