@@ -45,4 +45,54 @@ Por fim, o papel de um interruptor é controlar a carga elétrica do circuíto, 
 
 ## Quinto Capítulo - Communicating Around Corners
 Pressupomos que não conseguimos mais usar a luz da lanterna para nos comunicar através de uma janela, agora vamos precisar usar um circuito elétrico, onde colocamos um lâmpada e um interruptor em cada casa, assim, se eu ligar o interruptor na minha casa a lâmpada da outra casa vai ligar, e vice-versa. Repare que para esse circuíto, precisariamos de 4 fios, mas para economizarmos, poderíamos usar somente um fio **Comum**, para ligarmos e usarmos ele para compartilhar a condução elétrica entre duas lâmpadas e um interruptor, assim conseguíriamos reduzir de 4 para 3 fios.
-Pensando em podermos econimizar mais fios ainda, podemos usar a terra **(Ground)**, porque ela é um grande condutor, mas nesse caso, não esteríamos mais utilizando somente baterias de 1.5v e sim um potencial maior, mas assim como a terra é um bom condutor de elétrons, também é um "mar de elétrons" então isso aumentaria muito a **Resistência**, então não conseguiríamos utilizar toda a extensão da terra para podermos ligarmos o circuíto, porque quanto mais longo é o circuíto, mas a lâmpada perderia força e chegaria ao ponto de apaga-la. 
+Pensando em podermos econimizar mais fios ainda, podemos usar a terra **(Ground)**, porque ela é um grande condutor, mas nesse caso, não esteríamos mais utilizando somente baterias de 1.5v e sim um potencial maior, mas assim como a terra é um bom condutor de elétrons, também é um "mar de elétrons" então isso aumentaria muito a **Resistência**, então não conseguiríamos utilizar toda a extensão da terra para podermos ligarmos o circuíto, porque quanto mais longo é o circuíto, mas a lâmpada perderia força e chegaria ao ponto de apaga-la.
+
+## Sexto Capítulo - Logic with Switches
+A álgebra booleana é um tipo de matemática diferente da álgebra convencional, os operadores + e x na verdade são usados para outras operações dentro dela. O + significa União, e o x significa Interseção, invés de usarmos números na álgebra booleana, usamos **classes**.
+Por exemplo, temos dois tipos de classes de gatos, Machos (M) e Fêmeas (F), também podemos ter classes das cores de gatos, como Branco (B), Preto (P), Laranja (L) agora vamos para um exemplo de operação booleana:
+M x B
+Isso é um gato macho branco.
+Supondo que uma pessoa vá em um petshop e peça um gato que não pode ser Macho, e nem ter as cores Branco e nem Preto, então se eu chegasse com um gato Fêmea e Laranja essa pessoa ficaria satisfeita:
+!M x !B x !P = F x L
+
+A mesma coisa acontece para classes binárias, 0 e 1, ou seja:
+0 x 0 = 0
+0 x 1 = 0
+1 x 0 = 0
+1 x 1 = 1
+
+0 + 0 = 0
+0 + 1 = 1
+1 + 0 = 1
+1 + 1 = 1
+
+Isso basicamente se encaixa em circuítos elétricos que vimos nos últimos capítulos, dependendo da lógica aplicada um circuíto pode estar ligado ou desligado.
+
+## Sétimo Capítulo - Telegraphs and Relays
+O telégrafo foi um dispositivo inventado para se comunicar com agilidade e através de longas distâncias, basicamente funcionava como um interruptor de um lado, onde uma pessoa apertava um botão e ligava o circuíto elétrico, do outro lado do circuíto tinha uma pequena barra de ferro amarrada em um fio que quando era acionada fazia um barulho, desse modo as pessoas conseguiam se comunicar por código Morse. O circuíto usava o Ground para poder economizar nos fios, utilizando a terra como condutor, mas como se sabe a distância fica limitada, por isso que para alcançar grandes distâncias, precisava-se de alguém que repetia os sinais para passar adiante, pessoas faziam isso, ficavam escutando os sinais, anotavam a mensagem e passavam para frente até chegar no destinatário.
+Mas isso mudou quando perceberam que poderiam usar a própria barra de ferro para repetir o sinal, assim eles conectavam um pequeno pedaço de madeira a barra e assim que ela se movimentava e fazia os "clicks" o pedaço de madeira apertava sozinho o próximo telégrado da linha, assim se criou os **Relays** ou **Repetidores**.
+
+## Oitavo Capítulo - Relays and Gates
+Dentro da lógica booleanda existem **gates** ou **portas lógicas** que são usadas para manipular classes, dentro dos gates tem dois tipos de informações, os **inputs** que são os dados que são enviados para o operador, ou seja, se estivéssemos falando de circuítos elétricos, o dado poderia ser a presença ou a ausência da corrente elétrica no circuíto, assim, quando essa corrente chegar (ou não) no gate, é feito uma operação aritmética, temos o operador **AND** que nada mais é a interseção que falamos no capítulo anterior, junto deles temos mais outros gates básicos:
+1. AND
+2. OR
+3. NOT
+4. NOR
+5. NAND
+
+Segundo a **Lei de'Morgan**, nós podemos fazer qualquer tipo de porta lógica, somente utilizando o NAND, essa lei serve para simplificar operações muito complexas.
+
+## Nono Capítulo - Our Ten Digits
+Os números são um linguagem universal, todo o mundo usa os mesmos caracteres para representar eles. Antigamente, existiam os números gregos, eles usavam caracteres para representar uma quantidade específica, por exemplo I é 1, V é 5, X é 10, L é 50, etc... Mas esses tipos de algorismos dificultavam muito as operações matemáticas, por conta da sua complexidade e sintaxe, depois de algum tempo foi apresentado ao mundo os algorismos Hindu-arábicos, eles usam uma base **decimal** e é a mesma base que usamos hoje em dia, ou seja tem dez caracteres diferentes (0,1,2,3,4,5,6,7,8,9) e a posição dos números influencia no seu peso.
+Quanto mais um número está a esquerda, mais ele vale, veja um exemplo:
+478
+
+Esse número é o Quatrocentos e Setenta e Oito, essa é a forma convencional de escreve-lo, mas também podemos usar:
+4 x 100
+7 x 10
+8 x 1
+
+Ou até mesmo usamor potências para escreve-lo:
+4 x 10² + 7 x 10¹ + 8 x 10⁰
+
+Basicamente esse é o sistema numérico com base 10 que usamos no dia a dia.
