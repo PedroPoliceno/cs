@@ -130,3 +130,7 @@ Funciona dessa forma, nós temos uma sequência de 6 números onde os dois prime
 - #FF0000 = Vermelho
 - #00FF00 = Verde
 - #0000## = Azul
+
+## Décimo terceiro Capítulo - From ASCII to Unicode
+Grande parte das informações que você no seu computador hoje em dia estão em formato de texto, isso porque o computador usa os bits e interpretam ele como letras. Para que isso seja possível, foram criados "protocolos", o primeiro criado tinha 32 variações, isso só conseguia abranger alguns caracteres básicos, sem diferença de letra maiúscula e letra minúscula, isso é um problema, porque existem muitas outras variações de caracteres, principalmente em linguas estrangeiras, depois dela vieram mais alguns outros protocolos, mas o mais importante deles foi o *American Standard Code for Information Interchange* que usava 7 bits e contava com 128 variações de caracteres. Mas mesmo assim, esse tipo de protocolo ainda só cobria a língua inglesa, e só tinha caracteres específicos da América, como o símbolo de dólar, por exemplo.
+Após a criação do ASCII, foi criado um protocolo que usava 8 bits, e dobrava as variações comparado a tabela ASCII, esse é o UTF, com 256 variações, dessa vez ele conseguia abranger bem mais línguas, e os primeiros caracteres dele foram herdados da tabela ASCII, ele é usado em grande parte da internet, existem outras tabelas com ainda mais variações, mas começam se tornar muito mais pesadas, para escrever arquivos, então o padrão da internet hoje em dia é o **UTF-8**.
