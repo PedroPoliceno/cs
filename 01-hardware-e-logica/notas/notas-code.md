@@ -102,4 +102,18 @@ Além da base decimal que usamos no nosso dia a dia, elas usam 10 caracteres dif
 Assim como temos a base octal, temos também a base dois, que são representadas apenas por dois caracteres (0,1) então 10 na base dois na verdade não vale "dez" e sim 2, cada casa da base 2 é representada como uma potência de dois, ou seja o número é 1011, e ele poderia ser escrito assim:
 1 x 2³ + 0 x 2² + 1 x 2¹ + 1 x 2⁰
 
+Algum matemático percebeu que chamar os números da base dois de "dígito binário" era muito simples para a importânciaque eles tem, então ele decidiu chama-lo de bit
 Assim a base dois é usada para representar qualquer número, com essa simplicidade podemos usarmos em circuítos elétricos, representadando o ligado e desligado (1 e 0), e com ela também podemos fazer operações booleanas, e isso é tudo que precisamos para montar um computador.
+
+## Décimo primeiro Capítulo - Bit by Bit by Bit
+A mágica da base dois, é a sua simplicidade, ela é a base numérica mais simples que podemos usar para representar algo, no caso também existe a base um, mas só teríamos um caracter e não conseguiríamos fazer muita coisa com isso.
+Com a base dois nós conseguimos representar diferentes coisas dependendo do contexto, por exemplo:
+Uma pessoa pode responder uma pesquisa de um cinema, que serve para responder se ela gostou ou não do filme, e as respostas são 0 para não gostou e 1 para gostou. Aí está, temos uma forma de interpretar esses dois caracteres.
+Podemos ir mais adiante ainda, vamos supor que estamos entre 2 amigos (Pedro e João), agora temos uma combinação:
+- 00 Ninguém gostou do filme
+- 01 Apenas o Pedro gostou do filme
+- 10 Apenas o João gostou do filme
+- 11 Ambos gostaram do filme
+
+Mas podemos ir mais adiante, códigos de barras, por exemplo, usam o mesmo raciocínio, mas ao invés de termos os 1's e 0's escritos, temos linhas e espaços, onde cada linha representa 1 e cada espaço representa 0, quando o leitor passa no código de barras ele interpreta aquela sequência e retorna o código de barras.
+Resumindo, conseguimos representar qualquer tipo de coisa com a base 2, tudo depende do contexto.
