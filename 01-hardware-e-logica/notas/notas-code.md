@@ -117,3 +117,16 @@ Podemos ir mais adiante ainda, vamos supor que estamos entre 2 amigos (Pedro e J
 
 Mas podemos ir mais adiante, códigos de barras, por exemplo, usam o mesmo raciocínio, mas ao invés de termos os 1's e 0's escritos, temos linhas e espaços, onde cada linha representa 1 e cada espaço representa 0, quando o leitor passa no código de barras ele interpreta aquela sequência e retorna o código de barras.
 Resumindo, conseguimos representar qualquer tipo de coisa com a base 2, tudo depende do contexto.
+
+## Décimo segundo Capítulo - Bytes and Hexadecimal
+Historicamente, os dados se moviam dentro do computador por quantidade variáveis, poderiam ser 6, 7, ou até mesmo 9 bits, mas essa pequena quantidade de bits se movendo dentro do computador tinha um problema, eles não eram uma potência de dois, por mais que a tabela de caracteres da época cabia dentro de um conjunto com 7 bits, a escolha for faze-la com 8, por vário motivos, economia de hardware, padronização, etc... E ainda 8 bits conseguem representar de 0 a 255 caracteres, isso abrange muito mais do que somente letras,mas também outros tipos de informações.
+Esse conjunto de 8 bits se chamam **bytes**, e eles foram muito importantes para a Arquitetura da computação.
+Metade desse conjunto, ou seja, 4 bits são chamados de **nibble**
+E um conjunto com 2 bytes, ou seja, 16 bits são chamados de **Word**
+Outra base muito importante para a computação é a **Hexadecimal**, nela temos ao todo 16 caracteres para representar as quantidades (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F), se convertemos os caracteres finais da base hexadecimal para a base decimal seria assim: A = 10, B = 11, C = 12, D = 13...  e assim por diante. No HTML temos como mudar a cor de alguma coisa usando o RGB (Red, Green, Blue) porque combinando essas cores, nós conseguimos fazer praticamente qualquer cor que conseguimos enxergar a olho nu.
+Funciona dessa forma, nós temos uma sequência de 6 números onde os dois primeiros dígitos ditam a quantidade de vermelho, os dois segundos de Verde e os últimos de Azul, a quantidade mais baixa é 0 e a mais alta é F, dessa forma nós conseguimos 256 tons de cada cor, aqui são alguns exemplos:
+- #FFFFFF = Branco
+- #000000 = Preto
+- #FF0000 = Vermelho
+- #00FF00 = Verde
+- #0000## = Azul
