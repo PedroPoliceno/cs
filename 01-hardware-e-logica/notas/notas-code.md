@@ -149,3 +149,15 @@ Na última conta o resultado deu dois dígitos, isso porque o número da esquerd
 Os computadores no começo de sua história, usavam relés para fazer cálculos, mas isso era um problema, por causa de custo, tamanho, manutenção, etc... Eram computadores gigantescos comparados ao que temos hoje.
 O termo "Computador", antigamente, era um cargo de pessoas que trabalhavam fazendo cálculos complexos.
 Depois dos computadores de relés, eles evoluíram para Válvulas, que eram muito mais rápidas que relés mecânicos, aqui também foi quando os computadores começaram a usar números binários para fazer cálculos. Mas mesmo assim, as válvulas davam muito problema de manutenção e esquentavam demais, e logo eles evoluíram para transistores (feitos de Sílicio ou Germânio), que são muito menores e são muito mais difíceis de queimar. Foi daí que surgiu o nome "Vale do sílicio"" na California.
+
+## Décimo sexto Capítulo - But What About Substraction?
+Os computadores não sabem fazer literalmente uma subtração, isso porque a arquitetura dos computadores foram feitas para usar apenas 0 e 1, e isso inclui símbolos também. O que os computadores fazem na verdade é somar números negativos, e números negativos não são representados simplesmente por um bit no final do byte, por exemplo, 10000001 é -1 e 10000001 é +1, na verdade eles fizeram outra coisa para representar números negativos.
+Os computadores usam números positivos para representar números negativos, isso funciona assim, ao invés de termos uma sequência de 0 a 999 de números positivos, nós usamos os números a partir do 500 para representar números positivos.
+Isso é um exemplo normal de sequência numérica:
+-500, -499,... -2, -1, 0, 1, 2 ...499, 500
+Aqui temos infinitos números positivos e infinitos números negativos, e usamos o símbolo de "-" para representar números abaixo de 0. Para resolver a falta do símbolo negativo, pegamos uma sequência de números positivos, dentro de um contexto e dividimos eles para representar números positivos e negativos:
+500, 501,... 998, 999, 0 , 1, 2 ... 498 499
+
+Aqui na verdade o 500 está representando o -500, o 501 é o -499, e assim por diante até chegarmos no 999, que é o último número da nossa sequência que representa o valor -1.
+Dentro de um byte, nós usamos o último bit do lado esquerdo para representar um número negativo, se for 1, ele é um número negativo, assim nós conseguimos representar os números -126 até 125 usando base 2, então para fazer uma subtração na verdade é a soma de dois números positivos, e o carry (resto) é descartado.
+Não temos como saber se um número binário é negativo só de olhar para ele, precisamos do contexto que ele está inserido.
