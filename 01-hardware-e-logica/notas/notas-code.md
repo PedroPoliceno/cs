@@ -144,3 +144,8 @@ A adição na base dois é a operação matemática mais básica, e ela funciona
 1 + 1 = 10
 
 Na última conta o resultado deu dois dígitos, isso porque o número da esquerda é a "sobra" da soma, ele é conhecido como **carry**, nós conseguimos montar essas adições usando portas lógicas. Usando gates como AND, OR, NAND e XOR, podemos montar um bit-adder, que pode ser usado para montar um Half-adder e depois um Full-Adder, e toda essa operação nasce de uma porta lógica.
+
+## Décimo quinto Capítulo - Is This for Real?
+Os computadores no começo de sua história, usavam relés para fazer cálculos, mas isso era um problema, por causa de custo, tamanho, manutenção, etc... Eram computadores gigantescos comparados ao que temos hoje.
+O termo "Computador", antigamente, era um cargo de pessoas que trabalhavam fazendo cálculos complexos.
+Depois dos computadores de relés, eles evoluíram para Válvulas, que eram muito mais rápidas que relés mecânicos, aqui também foi quando os computadores começaram a usar números binários para fazer cálculos. Mas mesmo assim, as válvulas davam muito problema de manutenção e esquentavam demais, e logo eles evoluíram para transistores (feitos de Sílicio ou Germânio), que são muito menores e são muito mais difíceis de queimar. Foi daí que surgiu o nome "Vale do sílicio"" na California.
