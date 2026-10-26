@@ -164,3 +164,13 @@ Não temos como saber se um número binário é negativo só de olhar para ele, 
 
 ## Décimo sétimo Capítulo - Feedback and Flip-Flops
 Nós vimos que conseguimos fazer contas matemáticas usando circuítos elétricos e gates, mas também podemos armazenar bits, e para isso existe o flip-flop, que é usado para armazenar um estado. Isso é importante porque se quisermos, por exemplo, contar até 10, precisamos saber qual foi o último número que falamos, ele funciona basicamente como um looping, que fica rodando o mesmo sinal, e só muda quando mandamos outro sinal. Vimos também o **clock** que serve para ordernar todos os cálculos que o circuíto faz, ele funciona com um sinal oscilando entre ligado e desligado, na vida real ele é um pequeno pedaço de Quartzo dentro do processador, e ele é medido de Heartz (Hz), isso é usado para medir as frequências por segundo que um processador consegue trabalhar.
+
+## Décimo oitavo Capítulo - Let's Build a Clock!
+Aqui basicamente aprendemos como montar um relógio, começamos definindo um relógio binário, que mostra somente números da base dois, mas para isso usamos O BCD(*Binary-coded-decimal*) que funciona mostrando números decimais com 4 dígitos binários, ou seja, vamos de 0000 a 1001 (ou de 0 a 9) e cada caracter se torna um número separado, por exemplo, se quisessémos escrever o seguinte horário:
+12:30:24
+
+0001 0010 : 0011 0000 : 0010 0100
+
+Assim seria o "horário" em binário.
+Esse tipo de utilização de números binários não é muito usado na arquitetura de computadores, porque eles dificultam muito as operações aritméticas, então usamos somente para horários.
+Fora o modelo binário de horas, podemos também transforma-lo em legível para humanos, usando diversos gates e flip-flops.
