@@ -174,3 +174,9 @@ Aqui basicamente aprendemos como montar um relógio, começamos definindo um rel
 Assim seria o "horário" em binário.
 Esse tipo de utilização de números binários não é muito usado na arquitetura de computadores, porque eles dificultam muito as operações aritméticas, então usamos somente para horários.
 Fora o modelo binário de horas, podemos também transforma-lo em legível para humanos, usando diversos gates e flip-flops.
+
+## Décimo nono Capítulo - An Assemblage of Memory
+Na computação precisamos armazenar dados permanentemente, assim como acordamos todos os dias e lembramos o que fizemos no dia anterior, e lembramos quem somos e o que precisamos fazer.
+Já vimos anteriormente que um *flip-flop* é usado para armazenar um bit, que funciona basicamente como um loop, se combinarmos vários flips-flops, podemos conseguir armazenar um byte.
+Quando misturamos vários flip-flops e usamos bits para "mapear" onde fica cada informação, conseguimos construir uma **RAM**(Random Access Memory).
+Basicamente, temos 3 tipos de dados que são usados em uma RAM, o primeiro é o *address*, que serve como mapeamento de onde uma informação está armazenada, *Data In* são dados que passam pela RAM, *Data Out* são os dados que estavam na RAM, e o *Write Signal* que dita o que vai acontecer com os bits, se estiver ativo os dados são escritos na RAM, e se tiver desativado é somente leitura.
