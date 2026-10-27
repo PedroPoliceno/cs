@@ -180,3 +180,15 @@ Na computação precisamos armazenar dados permanentemente, assim como acordamos
 Já vimos anteriormente que um *flip-flop* é usado para armazenar um bit, que funciona basicamente como um loop, se combinarmos vários flips-flops, podemos conseguir armazenar um byte.
 Quando misturamos vários flip-flops e usamos bits para "mapear" onde fica cada informação, conseguimos construir uma **RAM**(Random Access Memory).
 Basicamente, temos 3 tipos de dados que são usados em uma RAM, o primeiro é o *address*, que serve como mapeamento de onde uma informação está armazenada, *Data In* são dados que passam pela RAM, *Data Out* são os dados que estavam na RAM, e o *Write Signal* que dita o que vai acontecer com os bits, se estiver ativo os dados são escritos na RAM, e se tiver desativado é somente leitura.
+
+## Vigésimo Capítulo - Automating Arithmetic
+Aqui aprendemos como automatizar operações aritméticas com portas lógicas, primeiro de tudo, precisamos organizar as informações por blocos na memória, temos duas opções principais:
+- Big-Endian: Armazena primeiro os dados maiores, as casas que valem mais.
+- Little-Endian: Armazena primeiro os dados que valem menos, como casas depois da vírgulo nos números decimais.
+
+Escolhemos o *Little-Endian* por facilitar as operações, como o caso dos Carrys são calculados mais facilmente.
+Para conseguirmos declarar qual operação devemos fazer (soma ou subtração) podemos usar sequência de bits para declarar isso, por exemplo 0100 para soma e 1000 para subtração (somente um exemplo).
+Dessa forma conseguimos executar as operações quando queremos e salvar os resultados na RAM.
+Aqui temos a separação de **hardware** e **software**:
+- **hardware**: É a parte física ou simulada que é difícil de alterar (circuítos elétricos, portas lógicas, flips-flops...)
+- **software**: É a parte mais fácil, são os códigos e números armazenadas na memória, é a parte fácil de alterar, podemos apaga-los e reescreve-los.
