@@ -192,3 +192,6 @@ Dessa forma conseguimos executar as operações quando queremos e salvar os resu
 Aqui temos a separação de **hardware** e **software**:
 - **hardware**: É a parte física ou simulada que é difícil de alterar (circuítos elétricos, portas lógicas, flips-flops...)
 - **software**: É a parte mais fácil, são os códigos e números armazenadas na memória, é a parte fácil de alterar, podemos apaga-los e reescreve-los.
+
+## Vigésimo primeiro Capítulo - The Arithmetic Logic Unit
+A *ALU*(Arithmetic Logic Unit) serve para executar operações aritméticas com base com sinais que o CPU envia para ela, usa os números fornecidos e executa a operação e devolve o resultado.
