@@ -195,3 +195,6 @@ Aqui temos a separação de **hardware** e **software**:
 
 ## Vigésimo primeiro Capítulo - The Arithmetic Logic Unit
 A *ALU*(Arithmetic Logic Unit) serve para executar operações aritméticas com base com sinais que o CPU envia para ela, usa os números fornecidos e executa a operação e devolve o resultado.
+
+## Vigésimo segundo Capítulo - Registers and Busses
+Nesse capítulo vemos mais alguns comandos que o CPU é capaz de interpretar para manipular dados, e tivemos uma pequena menção sobre o Assembly, e vimos como ele usa os registradores para manipular esses dados.
