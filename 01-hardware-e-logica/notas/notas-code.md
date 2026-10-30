@@ -198,3 +198,10 @@ A *ALU*(Arithmetic Logic Unit) serve para executar operações aritméticas com 
 
 ## Vigésimo segundo Capítulo - Registers and Busses
 Nesse capítulo vemos mais alguns comandos que o CPU é capaz de interpretar para manipular dados, e tivemos uma pequena menção sobre o Assembly, e vimos como ele usa os registradores para manipular esses dados.
+
+## Vigésimo terceiro Capítulo - CPU Control Signals
+Aqui vemos como a CPU usa sinais para controlar os seus dados, e como ela interpreta comandos alocados na memória para poder manipular esses dados. Vimos como o *PC*(Program Counter) funciona, e como ele ajuda a CPU a buscar informações ou comandos alocados na memória.
+
+## Vigésimo quarto Capítulo - Loops, Jumps and Calls
+Os algoritmos de computadores usam loops para poderem operar, por exemplo, se tivéssemos uma memória com 10 espaços vazios e a CPU só usasse os dados e comandos desses 10 espaços, uma hora o programa terminaria e não faria mais nada, para isso foram introduzidos os comandos *JMP* que são usados para pular para um espaço de memória. Então poderíamos usar essa mesma memória de 10 espaços e colocar um JMP no final para que quando o algoritmo terminasse poderia voltar ao ínicio e começar novamente ou introduzir novos dados.
+Além do comando JMP, temos os comandos CALL e RET que são usados como funções, nesse caso, funciona como as linguagens normais, onde escrevemos um bloco de código que pode ser reutilizado ao longo do nosso algoritmo, e para sair marcar o fim dessas "funções" são usados o RET.
