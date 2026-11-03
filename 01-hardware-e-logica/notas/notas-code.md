@@ -222,3 +222,8 @@ Conseguimos criar algoritmos com a liguagem *Assembly*, como vimos nos capítulo
 Mas hoje em dia temos muitas outras linguagens de programação usada para a Engenharia de Software, elas foram criadas com o objetivo de facilitar o desenvolvimento e fazer com que um algoritmo possa ser usado em vários computadores, alguns exemplos de linguagens que foram desenvolvidas para isso são FORTRAN, COBOL e ALGOL, mas elas não usadas mais hoje em dia. Essas são linguagens de *alto nível*, o Assembly é considerado de *baixo nível* porque conversa diretamente com o hardware.
 Para cada linguagem de programação nós precisamos ter uma ferramenta de "intermediação" que seja capaz de traduzir os scripts para linguagem de máquina, essas ferramentas podem ser o compilador, ou interpretador, elas funcionam de formas diferentes, o interpretador é um pouco mais fácil para desenvolver, mas também pode ser um pouco mais lento que o compilador.
 Alguns exemplos de linguagens de programação que são muito usadas hoje em dia são Python, JavaScript, C#, etc... Existem diversos tipos diferentes de linguagens, procedurais, orienteada a objetos, funcionais, e aí por diante...
+
+## Vigésimo oitavo Capítulo - The World Brain
+Nesse último capítulo vemos um pouco de como a Internet funciona, ela é um ambiente descentralizado, que está em vários computadores ao redor do mundo.
+Foi falado como que a transferência de dados por pacotes funciona *TCP/IP*, e como os nossos computadores tem endereços para saber para onde devem ir os dados que requisitamos.
+Hoje a maior base de conhecimento do mundo é a Internet, onde grande parte de todas as informações estão localizadas.
