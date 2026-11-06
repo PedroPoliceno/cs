@@ -257,3 +257,57 @@ Nós podemos usar o NAND e o NOR para fazer qualquer outro gate. Por exemplo, se
 - (NOT A) OR (NOT B) = NOT(A AND B)
 
 A Lei de Morgan é uma ferramente importante para simplificar operações booleanas, e também circuítos elétricos, muito usados por engenheiros elétricos.
+
+## Capítulo 12 - Bytes and Hexadecimal
+Para conveniência em mover e manipular dados, os sistemas de computadores agrupam bits, esses "grupos" de bits são chamadas **word**. Os tamanhos das words dependem da capacidade do processador, a diferença de word para bytes é que os bytes são um número fixo de bits (8) enquanto as words dependem da arquitetura do processador (16 bits, 32 bits, 64 bits), se um processador consegue mover e tratar 64 bits de uma vez a "word" desse processador são 64 bits.
+Os bits são convertidos em outra base, como o exemplo a seguir, para facilitar a leitura e interpretação de humanos, porque números binários são muito longos e confusos, e converte-los para uma base maior, ajuda na hora de desenvolvimento.
+Antigamente, os computadores eram majoritariamente feitos com múltiplos de 6 bits (12, 24, etc...), isso acontece porque era possível representar esses números com *base octal*(0, 1, 2, 3, 4, 5, 6, 7) que correspondem a um valor de 3 bits:
+000 0
+001 1
+010 2
+011 3
+100 4
+101 5
+110 6
+111 7
+
+Mas a indústria da computação tomou um rumo um pouco diferente, o problema dos processadores com múltiplos de 6 bits é que não são potências de dois. Aí entrou a palavra "byte", no começo o byte era somente o número em um determinado caminho de dados, mas mais para frente por causa do desenvolvimento de computadores empresariais chamados *System/360*, a byte foi definido como um conjunto de 8 bits. A escolha de 8 bits aconteceram por uma série de comodidades, uma delas é porque os caracteres que conseguimos representar com 8 bits são 256, e é a quantidade necessária para representar os caracteres da tabela ASCII por exemplo, e se caso houvesse alguma outra língua que não fosse possível representar com apenas 256 caracteres, como o caso do japones, chines, etc... 2 bytes funcionam muito bem.
+Como a base octal não se encaixa para conseguirmos representar uma sequência de 8 bits (isso acontece porque 8 não é divisível por 3), precisamos de outra base para conseguirmos fazer isso, aí entra a **base hexadecimal (16)**.
+
+A base hexadecimal é representada por 16 caracteres (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F). Eles conseguem representar um *nibble* (4 bits, meio byte, etc...):
+| Binary | Hexadecimal | Decimal |
+| :--- | :---: | :---: |
+| 0000 | 0 | 0 |
+| 0001 | 1 | 1 |
+| 0010 | 2 | 2 |
+| 0011 | 3 | 3 |
+| 0100 | 4 | 4 |
+| 0101 | 5 | 5 |
+| 0110 | 6 | 6 |
+| 0111 | 7 | 7 |
+| 1000 | 8 | 8 |
+| 1001 | 9 | 9 |
+| 1010 | A | 10 |
+| 1011 | B | 11 |
+| 1100 | C | 12 |
+| 1101 | D | 13 |
+| 1110 | E | 14 |
+| 1111 | F | 15 |
+
+Ou seja, conseguimos representar 1 bytes com 2 caracter hexadecimais:
+| Binary | Hexadecimal | Decimal |
+| :--- | :---: | :---: |
+| 00000000 | 00h | 0 |
+| 00010000 | 10h | 16 |
+| 00011000 | 18h | 24 |
+| 00100000 | 20h | 32 |
+| 01000000 | 40h | 64 |
+| 01100100 | 64h | 100 |
+| 10000000 | 80h | 128 |
+| 11000000 | C0h | 192 |
+| 11001000 | C8h | 200 |
+| 11100000 | E0h | 224 |
+| 11110000 | F0h | 240 |
+| 11111111 | FFh | 255 |
+
+A base 16 funciona como todas as outras, onde cada número representa uma potencia de 16, e o caracter mais a esquerda é o que vale mais.
