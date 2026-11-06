@@ -227,3 +227,33 @@ Alguns exemplos de linguagens de programação que são muito usadas hoje em dia
 Nesse último capítulo vemos um pouco de como a Internet funciona, ela é um ambiente descentralizado, que está em vários computadores ao redor do mundo.
 Foi falado como que a transferência de dados por pacotes funciona *TCP/IP*, e como os nossos computadores tem endereços para saber para onde devem ir os dados que requisitamos.
 Hoje a maior base de conhecimento do mundo é a Internet, onde grande parte de todas as informações estão localizadas.
+
+# Releitura do livro (Cap: 8, 12, 14, 16, 17, 18, 19, 20, 21, 22, 23 e 24)
+## Capítulo 8 - Relays and Gate
+Resumindo, os computadores são uma junção de Álgebra Booleana e Eletricidade, os componentes que fazem essa junção são as "portas" ou "gates". O livro nos apresenta um exemplo de uma pessoa escolhendo um gato, e essas são as exigências dela:
+"Eu quero um gato macho, castrado, preto ou bronzeado, ou uma gata fêmea, qualquer cor exceto branco, ou eu quero qualquer gato contanto que seja preto."
+
+A expressão booleana para esses critérios fica assim:
+(M × N × (W + T)) + (F × N × (1 − W)) + B
+
+Onde x representa o AND e o + representa o OR.
+Usando a "communicative law" e a "distributive law" a expressão fica simplificada assim:
+(N × ((M × (W + T)) + (F × (1 − W)))) + B
+
+Para essa expressão poderíamos montar um painel para escolher o nosso gatinho, onde cada variável pode virar um interruptor ligado a um circuíto elétrico, e conforme você acionasse ou desligasse eles, iria ligar uma lâmpada caso os critérios do gatinho fossem atendidos.
+Falando em terminologia de computadores, os interruptores seriam os "input devices" e a lâmpada seria o "output device".
+
+Nesse capítulos vemos como os Relés são ligados em cascatas para construirmos portas lógicas, cada relé é conectado em outro e assim conseguimos combinar os sinais elétricos.
+- AND é usado para uma opereção booleana, onde todos os inputs precisam ser verdadeiros para resultar em um output verdadeiro, se qualquer um dos inputs for falso, o output será falso também. O AND básico tem somente duas entradas para inputs, mas se combinarmos mais de um AND, conseguimos fazer um 3-input-AND, ou até mais do que apenas três.
+- OR é outro gate usado para operações booleanda, mas ele age de forma um pouco diferente, se apenas um dos inputs for verdadeiro, o output também vai ser.
+- NOT é o único dessa lista que contém somente um input, e a razão disso é porque ele inverte a entrada, ou seja, se o input for verdadeiro, ele irá retornar o falso, e vice-versa.
+- NOR ou (NOT OR) é basicamente o inverso dos outputs do NOR comum, ou seja toda vez que um OR resultaria em falso o NOR resulta em verdadeiro, a mesma coisa ao contrário.
+- NAND ou (NOT AND) segue a mesma lógica que que o NOR, mas age com o inverso do AND, toda vez que o AND resultaria em verdadeiro, ele resulta em falso.
+- Buffer é conhecido por não fazer muita coisa de diferente, ele apenas replica o input no output, ele é usado para duplicar um sinal fraco, ou usado para conseguir "atrasar" um pouco o sinal, isso funciona porque os relés demoram uma pequena fração de segundo para operar.
+
+Nós podemos usar o NAND e o NOR para fazer qualquer outro gate. Por exemplo, se ligarmos o mesmo input nas duas entradas do NAND conseguirmos construir um NOT, se pegarmos esse NOT e conectarmos no final do output do NAND construimos um AND, se invertemos os dois inputs do AND, ele tem o mesmo resultado que um NOR, o mesmo funciona se invertemos os inputs do OR, temos o mesmo resultado que o NAND. Isso que acabei de explicar é a representação do **Lei de Morgan**:
+
+- (NOT A) AND (NOT B) = NOT(A OR B)
+- (NOT A) OR (NOT B) = NOT(A AND B)
+
+A Lei de Morgan é uma ferramente importante para simplificar operações booleanas, e também circuítos elétricos, muito usados por engenheiros elétricos.
