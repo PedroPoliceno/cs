@@ -357,3 +357,59 @@ FullAdder(a=a[1], b=b[1], c=c0, sum=out[1], carry=c1);
 	FullAdder(a=a[7], b=b[7], c=c6, sum=out[7], carry=carryout);
 
 Uma vez que construímos o 8-bit adder, podemos combina-los para criar um 16-bit adder, usando um 8Adder para calcular os bits menos significantes, e outro para os bits mais significantes, e depois ligamos o carry out de um ligado no carry out de outro.
+
+## Capítulo 16 - But What About Substraction
+Agora que temos o poder do Adder nas mãos, como que podemos fazer a operação de **Subtração**, ela ainda é uma operação básica que complementa a adição, mas tem um mecanismo um pouco diferente.
+Na subtração, ao invés de sobrar, ou o "carry", temos a sobra, ou o "borrow", e para não precisarmos manipular um monte de portas lógicas e circuítos elétricos para chegarmos nesse mecânismo, podemos simplifica-lo para funcionar no que já temos.
+Vamos supor que queremos subtrair dois números decimais, como vimos no ensino fundamental, a subtração é a mesma coisa que a adição com números negativos:
+-176 + 253 = ?
+
+Nessa conta, nós ainda vamos ter as chamadas "sobras" então como podemos contornar isso? Simples, podemos adicionar um 1000 no começo e subtrair 1000 no final da conta:
+1000 - 176 + 253 - 1000
+
+Mas repare que ainda vamos ter que emprestar 1  na primeira conta (1000-176), como sabemos o 1000 pode ser representado com 999 + 1, então podemos adicionar 999 e depois somar 1 no final da conta, quando usamos o 999 nunca vamos precisar emprestar da próxima casa decimal:
+999 - 176 + 253 - 1000
+823 + 253 - 1000
+1076 + 1 - 1000
+1076 - 1000
+**77**
+
+Repare que não precisamos "emprestar um" em nenhum momento da conta. Isso se chama **complemento 9**, e serve para simplificarmos as contas.
+O complemento 9 de 823 é 176, e vice e versa. E não importa a conta, *o complemento nunca precisa emprestar*.
+Mas e se tentassemos subtrair um número maior do que outro, para fazermos essa conta usando o complemento 9, é só lembrar que o número é maior, logo o resultado vai ser negativo:
+999 - 253 + 176 - 1000
+746 + 175 - 999
+922 - 999
+**-77**
+Isso não é tão direto quanto a operação anterior, mas ainda funciona bem. Podemos usar essa mesma estratégia para números binários:
+- 10110000 + 11111101
+
+Podemos adicionar 11111111 no primeiro, depois adicionar 0000001, e no final da equação subtrair 100000000:
+11111111 - 10110000 + 11111101 + 00000001 - 100000000
+01001111 + 1111101 + 0000001 - 100000000
+
+Quando utilizamos a técnica de complemento em base decimais usando o 999... o nome é complemento 9, mas quando usamos na base binária, adicionando 111... na conta, o nome é complemento 1.
+Repare que o complemento 1 de 10110000 é 01001111 e o complemnto 1 de 01001111 é 10110000, repare que os digítos são só invertidos, essa é a razão do complemento 1 ser comumente referido como *inverse*.
+Continuando...
+101001100 + 00000001 - 100000000
+101001101 - 100000000
+**01001101**
+
+Essa foi a mesma conta que fizemos mais cedo com a base decimal (253-176=77), mas voltamos ao problema que citamos a cima, quando tentamos subtrair um número maior e o resultado tende a ser negativo.
+11111111 – 11111101 + 10110000 – 11111111
+10110010 – 11111111
+11111111 – 10110010 = 01001101
+255 – 178 = 77
+
+E aqui temos um problema, porque o resultado da conta foi 77, quando na verdade deveria ter sido -77, mas não vamos tratar esse problema agora. Por enquanto vamos nos concentrar em transformar o nosso 8-bit adder em um sistema de subtração também, que calcula números positivos.
+Para isso vamos adicionar mais um bit de input usado para indicar se vamos subtrair ou fazer adição dos números indicados, e agora vamos tratar o que antes era o Carry Out, como **overflow**, o overflow vai aparecer quando o resultado for um número de 9 bits, isso pode acontecer tanto na adição quanto na subtração.
+A principal implementação da nossa máquina de subtrair e adicionar, é o calculador de complemento 1, para isso podemos usar o gate XOR, com um dos inputs como o sinal de subtração ou adição e outro como o bit que queremos inverter (ou não).
+Assim, supunhamos que temos dois números com 8 bits, um deles nós conectamos no inversor para calcular o complemento 1 e o mesmo sinal que usamos para definir se vamos subtrair ou adicionar, usamos como Carry In do Adder, porque precisamos adicionar 1 no número antes de terminamos a conta e somarmos 100000000.
+
+No final do cálculo do 8-bit adder, pegamos o Carry Out e o sinal de Subtraction e colocamos os dois em um gate XOR, e o output dele vai servir como Overflow. Isso significa que se o "Substraction" estiver desligado, e o Overflow for 1 quer dizer que o resultado foi maior que 255, se o Substraction estiver ligado e o overflow for 1 quer dizer que o resultado é menor que o número "A"(o número que não foi invertido).
+Nós ainda não chegamos no resultado esperado, que é conseguir subtrair de forma que o resultado seja representado certo, para fazermos isso, precisamos de um jeito de representar os números negativos nessa equação, como vimos antes, temos o complemento 1 onde adicionamos 11111111 no começo da conta, depois adicionamos 00000001, e no final subtraímos 100000000, mas nele temos alguns problemas, como por exemplo, suponhamos que temos o número 0000 (que representa 0) e queremos fazer um conta de subtração, então existira um "zero negativo" (1111).
+Nesse caso, precisamos de uma solução que resolva esse problema, para isso eu apresento o complemento 2. Vou explicar primeiro como funciona o complemento 10 para ficar mais fácil o entendimento:
+Suponhamos que temos uma sequência de 0 a 999 números, nesse caso poderíamos representar (obviamente), do 0 ao 999, mas e se não precisassemos representar tudo isso, e se quisessemos representar só metade desses números positivos e deixamos a outra metade para representar números negativos. Em algorismos normais os números negativos funcionam assim:
+-999, -998,... -2, -1, 0, 1, 2,... 998, 999
+Repare que o 0 é o centro e temos infinitos números negativos para a esquerda e infinitos números positivos para a direita, mas no nosso caso não temos infinitos números, temos apenas 1000(0 a 999), nesse caso poderíamos usar até o 499 para representar números positivos, e a partir daí usarmos o restante para números negativos:
+500, 501,... 998, 999, 0, 1, 2,... 498, 499
