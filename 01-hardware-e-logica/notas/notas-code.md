@@ -311,3 +311,49 @@ Ou seja, conseguimos representar 1 bytes com 2 caracter hexadecimais:
 | 11111111 | FFh | 255 |
 
 A base 16 funciona como todas as outras, onde cada número representa uma potencia de 16, e o caracter mais a esquerda é o que vale mais.
+
+## Capítulo 14 - Adding with Logic Gates
+Nesse capítulo vamos aprender como construir um sistema de adição, porque adição é a operação aritmética mais básica da computação, e com ela conseguimos construir todas as outras.
+Mas para o caso de construir um computador do zero, nós não vamos construir uma calculadora normal, da base 10, ao contrário disso, vamos montar um sisterma quer faz a adição *números binários*.
+A adição para números binários funciona exatamente igual a de números decimais, você começa do número menos significativo para o mais, e sempre que aparece uma "sobra" ou um **carry**, nós passamos para a próxima casa.
+
+Para somar dois bits com Portas Lógicas nós precisamos primeiro analisar o resultado que queremos, um soma de dois bits, pode resultar em um número maior que um bit:
+
+| A | B | Sum | Carry |
+| :--- | :---: | :---: | :---: |
+| 0 | 0 | 0 | 0 |
+| 0 | 1 | 1 | 0 |
+| 1 | 0 | 1 | 0 |
+| 1 | 1 | 0 | 1 |
+
+Ou seja, o carry é a "sobra" da adição de dois bits. Mas repara bem em uma coisa, se analizarmos somente a coluna do Carry e as colunas do A e B, o resultado da tabela é idêntico a se nós usassemos o AND gate, então logo já conseguimos resolver o problema do Carry, agora precisamos do Sum (ou o resultado da soma).
+Dentro da computação, nós temos um gate chamado **XOR**, ou Exclusive OR, e ele é montado exatemente assim:
+(A NAND B) AND (A OR B)
+O resultado dessa operação é o que chamamos de XOR, e é exatamente o que precisamos para montar o resultado da nossa soma, porque a truth table dele é exatamente igual a da coluna Sum. Ou seja:
+A AND B = carry
+A XOR B = sum
+
+Essa "simplificação" se chama **encapsulação**, é quando nós abstraímos os detalhes de como exatamente o sistema ou circuíto funciona para deixarmos a visualização e entendimento mais "simples". Quando nós representamos o HalfAdder (que é o que acabamos de montar), com apenas um quadrado com dois inputs (A e B) e dois outputs (Carry Out e Sum Out), sem mostrarmos as portas lógicas, isso se chama *black box* ou caixa preta, é uma forma de abstração.
+Agora já temos uma forma de fazer uma conta simples de dois bits, mas com isso não conseguimos fazer muita coisa, por exemplo se quisessemos fazer essa conta:
+ 1111
++1111
+11110
+
+Veja que conseguimos usar o HalfAddder para a primeira coluna, mas a partir da segunda, precisamos colocar o carry que sobrou da primeira na equação, para isso vamos precisar fazer um Adder com 3 bits:
+
+Considere os operandos A,B e C (de carry).
+HalfAdder(a=a, b=b, carry=carry1, sum=sum1)
+HalfAdder(a=sum1, b=c, carry=carry2, sum=sum)
+Or(a=carry1, b=carry2, out=carry)
+
+Isso se chama **FullAdder**, e ele serve para somar 3 bits, agora sim conseguimos executar a operação que citei acima.
+Com o FullAdder em mão tudo o que precisamos fazer é conectar o carry out de um FullAdder no próximo e assim conseguimos fazer um efeito cascata para criarmos um 8-bit adder, para somarmos 1 byte, e o resultado dele vai ser um sum e um carry.
+FullAdder(a=a[1], b=b[1], c=c0, sum=out[1], carry=c1);
+	FullAdder(a=a[2], b=b[2], c=carryin, sum=out[2], carry=c2);
+	FullAdder(a=a[3], b=b[3], c=c2, sum=out[3], carry=c3);
+	FullAdder(a=a[4], b=b[4], c=c3, sum=out[4], carry=c4);
+	FullAdder(a=a[5], b=b[5], c=c4, sum=out[5], carry=c5);
+	FullAdder(a=a[6], b=b[6], c=c5, sum=out[6], carry=c6);
+	FullAdder(a=a[7], b=b[7], c=c6, sum=out[7], carry=carryout);
+
+Uma vez que construímos o 8-bit adder, podemos combina-los para criar um 16-bit adder, usando um 8Adder para calcular os bits menos significantes, e outro para os bits mais significantes, e depois ligamos o carry out de um ligado no carry out de outro.
