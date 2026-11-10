@@ -455,3 +455,39 @@ Nós pegamos o bit mais valioso do número A e do número B, e invertemos o bit 
 O NOR detecta o overflow de números positivos, se ambos os bits mais valiosos do A e B forem 0 e o resultado der um bit 1, que indica número negativo, algo também está errado.
 Os números binários por si só, são *unsigned* porque são somente positivos, quando usamos o complemento a 2, esses números binários se tornam *signed*, porque podemos representar números negativos com ele também, para um sequência de 8 bits conseguimos representar dos números -127 ao 128. O conceito matemático disso são números inteiros, ou **integers**, ou seja, que podem ser negativos e positivos.
 Hoje em dia, um número de 8 bits é extramamente pouco para trabalharmos, por isso usamos números com 16, 32, e até 64 bits, todos eles conseguem ser representados com *unsigned* e *signed*, e a sequência exponencialmente usando potências de 2.
+
+## Capítulo 17 - Feedback and Flip-Flops
+Todo mundo sabe que conseguimos usar a eletricidade para mover as coisas, como ventiladores, motores, ferramentas, etc... Na computação isso não é diferente.
+Nós conseguimos construir um loop usando uma porta lógica que oscila o sinal, basta conectarmos um input em um gate NOT e usar o output como input novamente, assim criamos um loop que oscila entre 0 e 1, desligado e ligado, falso e verdadeiro, etc... Essas conexão pode se chamar de *oscillator*.
+Conseguimos criar um diagrama de uma linha representando o output desse oscilador, seria algo como uma linha quadrada que sobe e desce de forma simétrica, onde a linha horizontal representa o tempo e a linha vertical representa o estado de 0 e 1. Olhando para essa linha vemos um espécie de tic-tac regular, e por isso que alguns chamam esse oscilador de **clock**, porque contando o números de oscilações conseguimos dizer o tempo (mais ou menos).
+Como que sabemos o quão rápido um clock é? Primeira precisamos saber algumas medidas que são usadas, a primeira dela é o *cycle* que é o tempo que um clock está na posição padrão, oscila e volta para a posição padrão novamente, o tempo que esse ciclo demora para acontecer se chama *period*, suponhamos que o período do nosso clock seja 0,02 segundos. Depois disso temos a frequência, ela é calculada *1 / period*, no caso do nosso clock, seria 50 ciclos por segundo.
+"Ciclos por segundo" é um termo auto-explicativo que não é usado muito hoje em dia, em homenagem ao Heinrich Rudolph Hertz, que foi a primeira pessoa que transmitiu e recebeu ondas de rádio, a palavra *hertz* é usada para medir a quantidade de ciclos de segundo, nesse caso diríamos que o nosso clock tem a capacidade de *50 hertz* ou *50 Hz*. Nesse caso nós apenas adivinhamos qual era a velocidade desse clock, mas o objetivo ao final desse capítulo é construir algo que consiga mensurar a velocidade do oscilador.
+Para começar podemos montar um circuíto com um par de gates NOR, O primeiro deles usa um input, e o output dele serve para o outro gate NOR, no 2° gate NOR já temos um input vindo do primeiro, e o segundo input é o normal, depois o output do segundo NOR vai fazer a volta e virar o segundo input do primeiro NOR e esse mesmo vai ser ligado em uma lâmpada, então ficaria mais ou menos assim:
+Nor(a=out, b=a, out=b);
+Nor(a=b, b=c, out=out);
+Para esse circuíto funcionar, precisamos sair do princípio que podemos fechar o input A ou o C, mas nunca os dois juntos.
+Supondo que os dois inputs (a e c) estejam abertos, o output do primeiro NOR vai ser 1 e o output do segundo NOR vai ser 0, o que resulta em 0.
+Agora se fechamos o input a, o primeiro NOR vai resultar em 0, o que significa que o segundo NOR vai ser 1, e o resultado é 1.
+Agora a mágica ocorre quando os dois inputs (a e c) são aberto novamente, o circuíto continua ligado, isso acontece porque o primeiro NOR continuou recebendo carga do output do primeiro, o que resultou no output do primeiro NOR igual a 0 e do segundo igual a 1. Nós podemos abrir e fechar o primeiro input que o circuíto vai continuar ligado, só conseguimos um resultado diferente quando fechamos o input c, porque o output do segundo NOR vai ser 0, o que resulta no desligamento de todo o circuíto, e agora podemos desligar o input c, que vai continuar tudo desligado.
+O mais estranho é que dependendo quando abrimos os dois inputs (ambos 0), o output do circuíto pode variar de 0 e 1, ele tem dois estados estáveis quando os inputs são ligados. Esse circuíto é chamado de **flips-flops**, eles "retém informação". Esses circuítos podem ser comparados a uma "gangorra" por que só de olhar para ela nós conseguimos deduzir qual lado foi empurrado para baixo por último, esse circuíto é uma ferramenta muito importante para que possamos adicionar um tipo de memória ao nosso computador, isso é muito importante para diversas coisas, pense como é contar sem saber o último número que falamos.
+Existem diversos tipos de flip-flop, o que acabamos de ver se chama R-S (Reset-Set), os dois NOR gates podem ser desenhados mais simétricamente, imagine dois NOR's um com cada input, um desses inputs são chamados Reset e o outro Set, os outputs de cada NOR são conectados no input do outro, o NOR que está com o Reset tem o output chamado Q, e o outro é o Q/, ou Q bar, que no caso é o oposto do Q.
+Tabela de Verdade (SR Latch)
+
+Inputs: S, R | Outputs: Q, Q̅
+
+S = 1 e R = 0 | Q = 1 e Q̅ = 0
+S = 0 e R = 1 | Q = 0 e Q̅ = 1
+S = 0 e R = 0 | Q = Q e Q̅ = Q̅
+S = 1 e R = 1 | Disallowed (Proibido)
+
+Essa é a truth table do Flip-Flop, note que quando ambos inputs são 0 os outputs são Q e Qbar, isso acontece porque o circuíto se lembra do estado deles antes dos dois inputs ficarem abertos.
+Melhor do que apenas lembrar de um bit qualquer, é lembrar de um bit que **queremos** lembrar, para implementar isso, precisamos de mais um input, o nome dele vai ser "Hold That Bit", que basicamente é um sinal para quando queremos guardar um bit, vamos supor que temos esse input e mais outro que se chama "Data", quando o input Hold That Bit está apagado, o bit "Data" não tem nenhum efeito sobre o circuíto, agora quando ele é 1, o circuíto reflete o Data:
+Inputs: Data, Hold That Bit | Output: Q
+
+Data = 0 e Hold That Bit = 1 | Q = 0
+Data = 1 e Hold That Bit = 1 | Q = 1
+Data = 0 e Hold That Bit = 0 | Q = Q
+Data = 1 e Hold That Bit = 0 | Q = Q
+
+Para implementar o Hold That Bit no R-S que já fizemos anteriormente, precisamos inserir mais dois gates AND, o primeiro AND vai ter como o input o reset e o sinal do Hold That Bit, o segundo AND, também tem o Hold That Bit como input, mas tem também o Set. Quando fazemos isso, se o Hold That Bit for 0, não importa se o Set ou o Reset tiverem valores diferentes, não vamos ter efeito nenhum no circuíto, apenas quando o Hold é 1 que o R-S volta a funcionar normalmente como vimos antes, o comportamento é exatamente o mesmo. Mas nós queremos somente 2 inputs, não três.
+223
