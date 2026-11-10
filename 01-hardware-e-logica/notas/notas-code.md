@@ -371,7 +371,7 @@ Mas repare que ainda vamos ter que emprestar 1  na primeira conta (1000-176), co
 999 - 176 + 253 - 1000
 823 + 253 - 1000
 1076 + 1 - 1000
-1076 - 1000
+1077 - 1000
 **77**
 
 Repare que não precisamos "emprestar um" em nenhum momento da conta. Isso se chama **complemento 9**, e serve para simplificarmos as contas.
@@ -386,7 +386,7 @@ Isso não é tão direto quanto a operação anterior, mas ainda funciona bem. P
 
 Podemos adicionar 11111111 no primeiro, depois adicionar 0000001, e no final da equação subtrair 100000000:
 11111111 - 10110000 + 11111101 + 00000001 - 100000000
-01001111 + 1111101 + 0000001 - 100000000
+01001111 + 11111101 + 0000001 - 100000000
 
 Quando utilizamos a técnica de complemento em base decimais usando o 999... o nome é complemento 9, mas quando usamos na base binária, adicionando 111... na conta, o nome é complemento 1.
 Repare que o complemento 1 de 10110000 é 01001111 e o complemnto 1 de 01001111 é 10110000, repare que os digítos são só invertidos, essa é a razão do complemento 1 ser comumente referido como *inverse*.
@@ -413,3 +413,45 @@ Suponhamos que temos uma sequência de 0 a 999 números, nesse caso poderíamos 
 -999, -998,... -2, -1, 0, 1, 2,... 998, 999
 Repare que o 0 é o centro e temos infinitos números negativos para a esquerda e infinitos números positivos para a direita, mas no nosso caso não temos infinitos números, temos apenas 1000(0 a 999), nesse caso poderíamos usar até o 499 para representar números positivos, e a partir daí usarmos o restante para números negativos:
 500, 501,... 998, 999, 0, 1, 2,... 498, 499
+-500, -499,... -2 -1, 0, 1, 2,... 498, 499
+
+A diferença entre o complemento 1 e o complemento 2 é que no primeiro nós só invertemos os bits, no segundo nós somamos 1 bit na conta.
+Agora fazendo um paralelo para os números binários, podemos pegar um número de 8 bit (byte) e fazermos a mesma coisa, mas no caso podemos só inverter os bits, como fazemos no complemento 1: 10110011 vira 01001100, e vice versa, e adicionamos 00000001 no final:
+10000000 = -128
+10000001 = -127
+10000010 = -126
+...
+11111101 = -3
+11111110 = -2
+11111111 = -1
+00000000 = 0
+00000001 = 1
+00000010 = 2
+...
+01111100 = 124
+01111101 = 125
+01111110 = 126
+01111111 = 127
+
+Assim podemos usar somente a soma e ignorar o carry para obtermos o resultado correto da subtração:
+  10000001
++ 01111100
+  11111101
+
+Aqui subtraímos o número -127 por 124 e o resultado foi -3.
+Mas o problema aparece quando tentamos somar dois números negativos, ou quando o resultado da soma (ou subtração) é maior que 127:
+  01111101
++ 01111101
+  11111010
+
+Aqui o resultado de 125 - 125 foi -6, isso acontece quando tentamos somar -125:
+  10000011
++ 10000011
+ 100000110
+
+Se ignorarmos o bit mais a esquerda (já que essa é uma operação de 8 bits), o resultado é 6, e obviamente está errado. Em geral o complemento 2 apresenta erros quando 2 números iguais são somados.
+Nós podemos adicionar alguns gates para detectar o overflow da operação, em mente que o bit que mais vale em um número representa se o número é positivo (0) ou negativo(1), tanto dos números que vão ser usados no cálculo, tanto no resultado do cálculo.
+Nós pegamos o bit mais valioso do número A e do número B, e invertemos o bit mais valioso do sum desses números e conectamos eles em um gate AND e em um gate NOR. O papel do AND é detectar o overflow para números negativos, se o bit mais valioso do A e do B forem 1, o que indica um número negativo e o bit mais significativo do resultado for 0, o que indica um número positivo, algo está errado.
+O NOR detecta o overflow de números positivos, se ambos os bits mais valiosos do A e B forem 0 e o resultado der um bit 1, que indica número negativo, algo também está errado.
+Os números binários por si só, são *unsigned* porque são somente positivos, quando usamos o complemento a 2, esses números binários se tornam *signed*, porque podemos representar números negativos com ele também, para um sequência de 8 bits conseguimos representar dos números -127 ao 128. O conceito matemático disso são números inteiros, ou **integers**, ou seja, que podem ser negativos e positivos.
+Hoje em dia, um número de 8 bits é extramamente pouco para trabalharmos, por isso usamos números com 16, 32, e até 64 bits, todos eles conseguem ser representados com *unsigned* e *signed*, e a sequência exponencialmente usando potências de 2.
