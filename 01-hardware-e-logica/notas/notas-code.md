@@ -490,4 +490,90 @@ Data = 0 e Hold That Bit = 0 | Q = Q
 Data = 1 e Hold That Bit = 0 | Q = Q
 
 Para implementar o Hold That Bit no R-S que já fizemos anteriormente, precisamos inserir mais dois gates AND, o primeiro AND vai ter como o input o reset e o sinal do Hold That Bit, o segundo AND, também tem o Hold That Bit como input, mas tem também o Set. Quando fazemos isso, se o Hold That Bit for 0, não importa se o Set ou o Reset tiverem valores diferentes, não vamos ter efeito nenhum no circuíto, apenas quando o Hold é 1 que o R-S volta a funcionar normalmente como vimos antes, o comportamento é exatamente o mesmo. Mas nós queremos somente 2 inputs, não três.
-223
+Se paramos para pensar, não faz sentido ambos os inputs (Set e Reset) serem 0, porque isso não tem efeito nenhum sobre o circuíto, a mesma coisa acontece quando ambos são 1, então o que mais faz sentido é um ser o inverso do outro, quando o Set está ligado, o Reset desliga, e vice e versa, então podemos unir os dois inputs somente em um chamado "Data" e ligar ele em um NOT, para servir como Reset, assim os sinais sempre vão ser diferentes. A segunda mudança que vamos fazer é dar um nome diferente para o Hold That Bit, vamos começar chama-lo de Clock, o que pode soar um pouco estranho, mas vamos ver daqui a pouco como isso vai funcionar, mas por enquanto ele só significa quando o bit é salvo.
+Então funciona exatamente da mesma maneira, quando o clock está ativo, o circuíto vai lembrar do valor do Data, o nome dele é "level-triggered D-type flip-flop", o D é de Data. Esse é a truth table dele:
+Tabela de Verdade (D Flip-Flop / Latch com Clock)
+
+Inputs: D, Clk | Outputs: Q, Q̅
+
+D = 0 e Clk = 1 | Q = 0 e Q̅ = 1
+D = 1 e Clk = 1 | Q = 1 e Q̅ = 0
+D = X e Clk = 0 | Q = Q e Q̅ = Q̅
+
+Esse circuíto também é conhecido como "Level-triggered D-type latch", isso porque o ele segura um bit de informação para quando quisermos usar.
+Esse é uma memória de um bit, e conseguimos montar ela para salver 1 byte de uma vez, ou seja, 8 bits, ou seja vão ter 8 datas inputs , um clock e 8 Qs de output, quando o clock é um, o byte inteiro vai para os "Qs", os Q̅ são ignorados aqui.
+Nós podemos usar esse circuíto com outros e montar algo mais complexo, como por exemplo, montar um "adder acumulador", nós podemos usar um 8 bit adder e conectar o output dele no 8 bit latcher, e usar o output do 8 bit latcher como input do adder, e colocamos um sinal no clock para quando queremos somar que podemos chamar de "Add". Então por padrão a primeira saída do latcher é 0, o que significa que o adder vai somar o input com nada, o que não vai mudar nada no output, então quando ele chegar no latcher, o Add estiver ativado, ele vai ser armazenado e vai voltar como input do adder novamente, somando com o próximo valor de input, e novamente o ciclo se repete.
+Para algumas aplicações, o Level-triggered D-type latch serve, mas para um adder acumulador nós não queremos que o data passe direto sempre quando o Clock for um, nós queremos que o latch salve o data toda vez que o clock muda de 0 para 1, ou de 1 para 0, essa transição é chamada "edge".
+Para isso temos o positive edge-triggered flip-flop latches, a diferença dele para o que vemos acima é que ele não salva os dados quando o clock é um, ele salva quando o clock migra de 0 para 1. Parece algo meio difícil de montar, mas há um macete, o positive edge-triggered flip-flop latches, é feito com dois Level-triggered D-type latch conectados de uma forma específica.
+Para conectarmos os dois latchs, primeiro invertemos o sinal do Clock e conectamos no primeiro flip-flop, e depois conectamos os dois outputs do primeiro no segundo latch, junto com o sinal original do clock, repare que o primeiro latch vai funcionar como um level-triggered D-type flip-flop, os bits vão ficar armazenados sempre no primeiro latch, já que o sinal do clock chega invertido.
+
+Tabela de Verdade (D Flip-Flop Sensível à Borda de Subida)
+
+Inputs: D, Clk | Outputs: Q, Q̅
+
+D = 0 e Clk = ↑ | Q = 0 e Q̅ = 1
+D = 1 e Clk = ↑ | Q = 1 e Q̅ = 0
+D = X e Clk = 0 | Q = Q e Q̅ = Q̅
+
+Essa é a truth table do nosso novo latch, repare que há setas apontadas para cima, isso quer dizer quando o clock muda de 0 para 1.
+Agora podemos conectar o nosso edge-triggered latch no nosso 8 bit adder para fazermos a acumulação adder, mas ainda temos um problema, o Carry Out ou "sobra" do adder é simplesmente ignorado aqui.
+Agora vamos explorar outro tipo de edge type latch, primeiro precisamos conectar o oscilador que falamos no começo do capítulo no input de clock, e depois usamos o Q̅ como próprio input no Data do Latch, o truth table desse flip-flop:
+Tabela de Verdade (D Flip-Flop)
+
+Inputs: D, Clk | Outputs: Q, Q̅
+
+D = 1 e Clk = 0 | Q = 0 e Q̅ = 1
+D = 1 e Clk = ↑ | Q = 1 e Q̅ = 0
+D = 0 e Clk = 1 | Q = 1 e Q̅ = 0
+D = 0 e Clk = 0 | Q = 1 e Q̅ = 0
+D = 0 e Clk = ↑ | Q = 0 e Q̅ = 1
+D = 1 e Clk = 1 | Q = 0 e Q̅ = 1
+
+Repare que quando o clock muda de 0 para 1, o Q e o Q̅ mudam de posição, por exemplo, o Q é 0, quando o clock muda para 1 ele muda para 1 também, mas quando o clock muda para 0 não acontece nada, somente quando o clock para um, o Q muda para 0, isso também ocorre para o Q̅ (só que ao inverso, é lógico).
+Nós já sabemos que usamos a medida *Hertz* para medir frequências, mas se um clock oscila 20 vezes por segundo, esse flip-flop tem a metade dessa frequência, ou seja 10 Hz. Isso pode ser chamado de **divisor de frequência**.
+Nós obviamente, conseguimos dividir um divisor e dividir outro divisor, e assim vai...
+Sinal Clk: Ciclos alternando entre 0 e 1 continuamente a cada pulso.
+
+Sinal Q1: Mantém-se em 0 nos dois primeiros instantes e depois alterna o estado a cada dois ciclos (0, 0, 1, 1, 0, 0, 1, 1).
+
+Sinal Q2: Mantém-se em 0 por quatro ciclos e depois vai para 1 por mais quatro ciclos (0, 0, 0, 0, 1, 1, 1, 1).
+
+Sinal Q3: Mantém-se em 0 por oito ciclos e depois vai para 1 nos oito ciclos seguintes
+
+Se nós escrevessemos os números resultados de cada divisor de frequência, e depois colocasse eles na vertical o nosso resultado seria esse:
+**Binary**
+
+0000
+0001
+0010
+0011
+0100
+0101
+0110
+0111
+1000
+1001
+1010
+1011
+1100
+1101
+1110
+1111
+
+Veja o padrão? É uma sequência de 0 a 15 em binário. A cada transação positiva do clock (de 0 para 1), o output fala para *incrementar*, nós podemos pegar esse circuíto e colocar dentro de uma caixa, podemos chamar ele de 8-bit ripple counter. Nós conseguimos usar os 8 bits que saem desse circuíto para contar a frequência do clock. Nós poderiamos "zerar" os outputs, e colocar para contar quando o circuíto chegasse em 255 em binário em zerasse novamente, nós checaríamos em quanto tempo demorou, vamos supor que fosse 10 segundos, nós pegamos 256 e dividiriamos por 10, o que resultaria em 25,6 hz.
+O único problema com o ripple counter, é que nem sempre ele pode começar com o 0, para isso, nós adicionamos um sinal "Clear" que serve para zerar totalmente o contador. Nós conectamos ele em um NOR depois do AND que seria o "Reset". E se colocamos um sinal de Reset, também precisamos considerar um sinal de "Preset", enquanto o Clear muda o Q para 0, o Preset muda para 1.
+**Entradas (Inputs):** Pre, Clr, D, Clk
+
+**Saídas (Outputs):** Q, Q̅
+
+Pre = 1, Clr = 0, D = X, Clk = X → Q = 1, Q̅ = 0
+
+Pre = 0, Clr = 1, D = X, Clk = X → Q = 0, Q̅ = 1
+
+Pre = 0, Clr = 0, D = 0, Clk = ↑ → Q = 0, Q̅ = 1
+
+Pre = 0, Clr = 0, D = 1, Clk = ↑ → Q = 1, Q̅ = 0
+
+Pre = 0, Clr = 0, D = X, Clk = 0 → Q = Q, Q̅ = Q̅
+
+Esses são os primeiros passos para construir uma **memória** do computador.
