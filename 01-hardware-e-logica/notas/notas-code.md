@@ -577,3 +577,57 @@ Pre = 0, Clr = 0, D = 1, Clk = ↑ → Q = 1, Q̅ = 0
 Pre = 0, Clr = 0, D = X, Clk = 0 → Q = Q, Q̅ = Q̅
 
 Esses são os primeiros passos para construir uma **memória** do computador.
+
+## Capítulo 19 - Let's Build a Clock
+Nesse capítulo vamos construit um relógio, mas não um relógio de parede que mostra as horas por um ponteiro, e sim um relógio que mostra os números em binário!
+Vamos pegar um exemplo: 12:30:47
+Se quisessemos desenhar esse número em binário ficaria da seguinte forma: 1100 : 11110 : 101111
+Mas conseguimos deixar algo mais simples, já que assim que terminassemos de converter os números binários, os segundos já mudariam: 0001 0010 : 0011 0000 : 0100 0111
+Agora nós temos 4 digítos binários para representar cada número decimal do horário, já que os números só vão até 9, fica muito mais fácil converte-los. O nome disso é *binary-coded decimal*, ou BCD.
+O BCD é pouco utilizado dentro da arquitetura de computadores, pelo fato que ele dificulta muito operações aritméticas, como adição e subtração, mas para mostrar horários representando números decimais ele funciona bem.
+Para fazer isso, nós precisamos definir a sequência de dígitos que vamos precisar mostrar:
+- O primeiro dígito de segundos vai de 0 a 10
+- O segundo dígito de segundos vai de 0 a 5
+- O primeiro dígito do minuto vai de 0 a 9
+- O segundo dígito de minuto vai de 0 a 5
+- O primeiro dígito das horas vai de 0 a 9
+- O segundo dígito das horas vai de 0 a 1
+
+Quando chega no último dígito da sequência, ele volta a 0. Começando com os primeiros dígitos, podemos usar um edge-triggered flip flop em linha. Nós usamos um Clock que tem 1 Hz de frequência, ou seja, muda de valor a cada 1 segundo, mas pensando nisso, esses flip-flops vão de 0000 a 1111, isso são 16 segundos até zerar, e isso não é o que queremos, nós queremos que quando chegue em 1001 (9) ele ativa o Clear em todos os flip-flops, para isso conectamos um AND no Q do segundo e no último flip-flop, e conectamos o output dele ao sinal de Clear e todos os flip-flops, assim antes do circuíto mostrar o 1011, ele limparia todos os dados de dentro dele, retornando a 0.
+Agora que nós temos o sinais dos primeiros dígitos, que vão de 0 a 9, nós precismos que toda vez que ele chegue até 9 e retorne para 0, mande um sinal para que o segundo dígito possa subir. Para que possamos resolver esse problema, podemos conectar um gate NAND no primeiro e no útimo flip-flops para mandarmos um sinal para o próximo circuíto, o output do NAND sempre vai ser 1, e quando o contador chegar até 1001, ele oscila de 0 a volta para 1.
+O próximo circuíto, que vai receber o sinal do NAND, ele vai servir para contar de 000 a 110 (6), vamos usar o mesmo fundamento do que os flip-flops passados, vamos conectar um AND no último e no bit do meio, e um NAND no último (mais valioso) e no primeiro bit (menos valioso), O AND vai servir como sinal para mandar um Clear para todos os flip-flops e o NAND vai servir como output para o próximo circuíto.
+
+Nós repetimos o primeiro circuíto, só que agora com o input vindo do circuíto de 1 minuto. E fazemos a mesma coisa com o segundo dígito dos minutos, são exatamente os mesmo circuítos dos segundos, mas com outputs diferentes.
+Os relógios convencionais contam as horas de 00 a 23, mas para esse caso, nós vamos construir um relógio com o padrão americano, que é o padrão 12 horas, mas para fazermos nós enfrentamos um pequeno problema, as horas não começam em 0 e sim em 12, depois vai para 1, mas vamos ignorar isso por enquanto, vamos partir do pressuposto que as horas vão de 00 a 11.
+Para fazer isso, temos dois pequenos problemas, o primeiro é que nos minutos e nos segundos, os dígitos maiores e menores são limpos independetemente do outro, quando o dígito menos chega a 1010, e quando o maior chega a 110, nas horas, o dígito também funciona quando chega a 1010 e é limpo, mas precisamos considerar quando o dígito maior é 1 e o segundo dígito é 0010, isso é a transição de 11 horas para 00, isso significa que devemos considerar ambos os dígitos na hora de resetar as horas:
+DFF(in=d4, clk=clk_ff4, out=q4, out=q4_not);
+DFF(in=q4, clk=clk, out=q3, out=q3_not);
+DFF(in=q3, clk=clk, out=q2, out=q2_not);
+DFF(in=q2, clk=clk, out=q1, out=q1_not);
+DFF(in=q1, clk=clk, out=q0, out=q0_not);
+Nand(a=q4, b=q0, out=period12);
+Or(a=q0, b=q1, out=or1);
+And(a=q4, b=or1, out=and1);
+Not(in=q3, out=not3);
+
+Os 4 primeiros flip-flops funcionam muito parecido com os outros de dígitos menores, mas o último AND é responsável por verificar quando o dígito maior é 1 e o menor é 0010.
+Agora conseguimos montar um circuíto que conta de 00 até 11 horas, mas ainda queremos resolver o problema de mostrar o 12 ao invés do 00, isso pode ser resolvido com um 5 input NOR:
+DFF(in=d4, clk=clk4, out=q4, out=q4_not);
+DFF(in=d3, clk=clk, out=q3, out=q3_not);
+DFF(in=d2, clk=clk, out=q2, out=q2_not);
+DFF(in=d1, clk=clk, out=q1, out=q1_not);
+DFF(in=d0, clk=clk, out=q0, out=q0_not);
+Or(a=q0, b=q1, out=or_in0);
+Or(a=q4, b=q3, out=or_in1);
+And(a=q4, b=or_in0, out=and_in0);
+Nand(a=q3, b=q2, out=nand_in0);
+Not(in=q2, out=not_in0);
+Nor(a=q4, b=q3, c=q2, d=q1, e=q0, out=nor_out);
+Nand(a=q4, b=q0, out=period12);
+Or(a=period12, b=q3, out=clk4);
+Or(a=q1, b=q0, out=d4);
+
+O NOR só vai retornar 1 quando todos os flip-flops virarem 0, e são conectados em mais dois OR's, e agora ao invés do relógio mostrar 0 0000, vai mostrar 1 0010.
+O NAND no final do código, é normalmente 1, menos quando o horário é 1 0001, daí o output vai para 0, isso pode funcionar como um sinal de AM PM.
+Cada um dois 6 circuítos tem um NAND conectado que serve para mandar um sinal para o próximo circuíto, o output dele é 0 a menos quando as entradas são 0, aí o output dele muda para 1.
+250
